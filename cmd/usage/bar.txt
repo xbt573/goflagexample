@@ -1,0 +1,4 @@
+Usage: goflagexample bar [--message message] [--help]
+    -h, --help: Display this message
+     --message: Set message to print
+                (default "foo")

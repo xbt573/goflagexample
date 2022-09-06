@@ -1,0 +1,3 @@
+Usage: goflagexample <mode> [--help]
+    -h, --help: Display help message
+          mode: Can be foo or bar
