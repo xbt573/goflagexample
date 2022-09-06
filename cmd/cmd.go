@@ -1,7 +1,7 @@
 package cmd
 
 import (
-	_ "embed"
+	"embed"
 	"flag"
 	"fmt"
 	"os"
@@ -10,22 +10,8 @@ import (
 )
 
 var (
-	//go:embed usage/usage.txt
-	usage    string
-	//go:embed usage/foo.txt
-	fooUsage string
-	//go:embed usage/bar.txt
-	barUsage string
-
-	Usage = struct {
-		Usage 	 string
-		FooUsage string
-		BarUsage string
-	}{
-		Usage: usage,
-		FooUsage: fooUsage,
-		BarUsage: barUsage,
-	}
+	//go:embed usage
+	Usage embed.FS
 
 	fooCmd = flag.NewFlagSet("foo", flag.ExitOnError)
 	barCmd = flag.NewFlagSet("bar", flag.ExitOnError)
@@ -39,15 +25,18 @@ var (
 
 func init() {
 	flag.Usage = func() {
-		fmt.Printf(Usage.Usage)
+		data, _ := Usage.ReadFile("usage/usage.txt")
+		fmt.Print(string(data))
 	}
 
 	fooCmd.Usage = func() {
-		fmt.Printf(Usage.FooUsage)
+		data, _ := Usage.ReadFile("usage/foo.txt")
+		fmt.Print(string(data))
 	}
 
 	barCmd.Usage = func() {
-		fmt.Printf(Usage.BarUsage)
+		data, _ := Usage.ReadFile("usage/bar.txt")
+		fmt.Print(string(data))
 	}
 }
 
@@ -59,12 +48,14 @@ func Main() {
 		fooCmd.Parse(os.Args[2:])
 		handlers.FooHandler(handlers.FooOptions{
 			Message: *fooMessage,
+			Flags: *fooCmd,
 		})
 
 	case "bar":
 		barCmd.Parse(os.Args[2:])
 		handlers.BarHandler(handlers.BarOptions{
 			Message: *barMessage,
+			Flags: *barCmd,
 		})
 
 	default:

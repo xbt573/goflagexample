@@ -1,4 +1,5 @@
-Usage: goflagexample bar [--message message] [--help]
+Usage: goflagexample bar [--help] [--message message] [outfile]
     -h, --help: Display this message
      --message: Set message to print
                 (default "foo")
+       outfile: File to write text to
