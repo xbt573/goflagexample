@@ -14,7 +14,7 @@ var (
 	usage    string
 	//go:embed usage/foo.txt
 	fooUsage string
-	//go:ember usage/bar.txt
+	//go:embed usage/bar.txt
 	barUsage string
 
 	Usage = struct {
@@ -69,7 +69,7 @@ func Main() {
 
 	default:
 		flag.Usage()
-		
+
 		if !(*help || *h) {
 			os.Exit(1)
 		}
